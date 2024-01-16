@@ -16,7 +16,7 @@ export const EditAds = () => {
     });
 
 
-
+    const Base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
     const fetchCategoryData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
@@ -57,20 +57,34 @@ export const EditAds = () => {
         console.log(formData)
     };
 
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+    //     // console.log(file.name)
+    //     if (file) {
+    //         const fileName = file;
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             ad_image: fileName,
+    //         }));
+    //     }
+    //     console.log(formData)
+    // };
+
+
+    
     const filehandleChange = (event) => {
         const file = event.target.files[0];
-        // console.log(file.name)
+
         if (file) {
+            //   const fileName = URL.createObjectURL(file); 
+
             const fileName = file;
             setFormData((prevData) => ({
                 ...prevData,
                 ad_image: fileName,
             }));
         }
-        console.log(formData)
     };
-
-
 
 
     const LogoutData = localStorage.getItem('login');
@@ -110,7 +124,9 @@ export const EditAds = () => {
             })
     };
 
+ 
 
+    console.log("formData" , formData)
 
 
     return (
@@ -144,6 +160,8 @@ export const EditAds = () => {
                                                     value={formData.ad_title}
                                                     onChange={handleChange}
                                                 />
+
+
                                             </div>
                                             <div className="col-md-6 mb-4">
                                                 <CustomInput
@@ -154,9 +172,14 @@ export const EditAds = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="image"
-                                                    // value={formData.image}
+                                                    // value={formData?.ad_image}
                                                     onChange={filehandleChange}
                                                 />
+
+                                                <div className="galleryItem col-md-4 mb-3 position-relative">
+                                                    {/* <img src={formData?.ad_image} className="w-100 " /> */}
+                                                    <img  className="w-100 " src={formData?.id ? Base_url + formData?.ad_image : formData?.ad_image} alt={`Product Image ${formData?.id}`} />
+                                                </div>
                                             </div>
                                             <div className="col-md-12">
                                                 <CustomButton variant='primaryButton' text='Submit' type='submit' />
@@ -175,4 +198,3 @@ export const EditAds = () => {
         </>
     );
 };
-

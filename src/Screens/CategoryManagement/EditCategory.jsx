@@ -16,7 +16,7 @@ export const EditCategory = () => {
     });
 
 
-
+    const Base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
     const fetchCategoryData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
@@ -68,20 +68,101 @@ export const EditCategory = () => {
         console.log(formData)
     };
 
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+    //     // console.log(file.name)
+    //     if (file) {
+    //         const fileName = file;
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             image: fileName,
+    //         }));
+    //     }
+    //     console.log(formData)
+    // };
+
+
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+
+    //     // console.log(file.name)
+    //     if (file) {
+    //         const fileName = file;
+    //         console.log(fileName)
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             image: fileName,
+    //         }));
+    //     }
+    //     console.log(formData)
+    // };
+
+
+
+
     const filehandleChange = (event) => {
         const file = event.target.files[0];
-        // console.log(file.name)
+    
         if (file) {
-            const fileName = file;
-            setFormData((prevData) => ({
-                ...prevData,
-                image: fileName,
-            }));
+          const fileName = URL.createObjectURL(file); 
+                    //   const fileName = file;
+          setFormData((prevData) => ({
+            ...prevData,
+            image: fileName,
+          }));
         }
-        console.log(formData)
-    };
+      };
+   
+
+// when upload image image not showing fix it
 
 
+
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+
+    //     // if (file) {
+    //     const reader = new FileReader();
+
+    //     reader.onload = (e) => {
+    //         const imageDataUrl = e.target.result;
+
+    //         setFormData((prevData) => {
+    //             return {
+    //                 ...prevData,
+    //                 image: file,
+    //             }
+    //         });
+    //     };
+
+    //     // Read the selected image file as a data URL
+    //     reader.readAsDataURL(file);
+    //     // }
+    // };
+
+
+
+    
+    // const filehandleChange = (event) => {
+    //     const files = event.target.files[0]; 
+  
+    //          const reader = new FileReader();
+
+    //         reader.onload = (e) => {
+    //             const imageDataUrl = e.target.result;
+
+    //             setFormData((prevData) => {
+    //                             return {
+    //                                 ...prevData,
+    //                                 image: imageDataUrl,
+    //                             }
+    //                         });
+    //                     };
+                 
+    //         reader.readAsDataURL(files);
+        
+
+    // };
 
 
     const LogoutData = localStorage.getItem('login');
@@ -183,7 +264,16 @@ export const EditCategory = () => {
                                                     // value={formData.image}
                                                     onChange={filehandleChange}
                                                 />
-                                            </div>
+
+ 
+
+                                              
+
+                                                    <div className="galleryItem col-md-4 mb-3 position-relative">
+                                                        {/* <img src={ Base_url +  formData?.image}  className="w-100 "/> */}
+                                                       <img src={formData.id ? Base_url + formData.image : formData.image} alt={`Product Image ${formData.id}`} />
+                                                    </div>
+                                             </div>
                                             <div className="col-md-12">
                                                 <CustomButton variant='primaryButton' text='Submit' type='submit' />
                                             </div>
@@ -195,10 +285,14 @@ export const EditCategory = () => {
                     </div>
                 </div>
 
-                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Category Update Successfully.' />
+                <CustomModal show={showModal} close={(
+
+                ) => { setShowModal(false) }} success heading='Category Update Successfully.' />
 
             </DashboardLayout>
         </>
     );
 };
 
+
+//   {/* <img src={formData.id ? Base_url + formData.image : formData.image} alt={`Product Image ${formData.id}`} /> */}

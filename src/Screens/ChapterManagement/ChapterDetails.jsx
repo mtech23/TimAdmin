@@ -1,20 +1,31 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import BackButton from "../../Components/BackButton";
 import CustomModal from "../../Components/CustomModal";
 import CustomButton from "../../Components/CustomButton";
 import Accordion from 'react-bootstrap/Accordion';
 import CustomInput from "../../Components/CustomInput";
+import { Link, useNavigate } from "react-router-dom";
+
 import './style.css'
 
-export const ChapterDetails = () => {
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+export const ChapterDetails = () => {
+    const [leadData, setLeadData] = useState({});
+
+    const [editModal, setEditModal] = useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
     const { id } = useParams();
 
     const base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
 
     const [data, setData] = useState({});
+    //                                   <Link to={`/book-management/edit-book/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
 
     const [showModal, setShowModal] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
@@ -45,6 +56,9 @@ export const ChapterDetails = () => {
         setShowModal4(true)
     }
 
+
+    // https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/1/undefined
+    const [chapetrid, setChapterid] = useState()
     const chapterData = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Tim Admin | Chapter Detail';
@@ -78,6 +92,45 @@ export const ChapterDetails = () => {
         chapterData()
     }, []);
     console.log(data)
+
+    console.log("chapetrid ", chapetrid)
+
+    const handleEdit = (e) => {
+        console.log("chapetrid ", chapetrid)
+        e.preventDefault();
+
+        const LogoutData = localStorage.getItem('login');
+        // setLeadData((prev) => ({
+        //     ...prev,
+        //     chapetr_id: chapetrid
+        // }));
+
+        console.log(leadData);
+        fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_update_new/${id}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+                body: JSON.stringify(leadData)
+            },
+        )
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                console.log(data)
+                // editDetailData()
+                setEditModal(false)
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+                console.log(error);
+            })
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -123,6 +176,51 @@ export const ChapterDetails = () => {
             })
     }
 
+
+
+    const editDetailData = (bookid) => {
+        console.log("editDetailData", bookid)
+        setChapterid(bookid)
+        console.log("editDetailData", bookid)
+        const LogoutData = localStorage.getItem('login');
+        document.title = 'Mt Records | Book Chapters Detail';
+        document.querySelector('.loaderBox').classList.remove("d-none");
+        fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/${id}/${bookid}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+            }
+        )
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+                console.log(data)
+
+                setLeadData(data?.data)
+
+
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+                console.log(error);
+            })
+    }
+
+    useEffect(() => {
+        editDetailData()
+    }, []);
+
+
+
+
+
+    console.log("data?.chapters ", data?.chapters)
     return (
         <>
             <DashboardLayout>
@@ -183,7 +281,16 @@ export const ChapterDetails = () => {
                                             <Accordion.Item eventKey={index}>
                                                 <Accordion.Header>{`Chapter ${index + 1}`}</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <h3 className="text-capitalize">{item?.title}</h3>
+                                                    <div className="chapeditz d-flex">
+                                                        <h3 className="text-capitalize">{item?.title}</h3>
+                                                        <p>
+                                                            <Link onClick={() => {
+                                                                setEditModal(true)
+                                                                editDetailData(item.id)
+                                                            }} className="chaptableAction"><FontAwesomeIcon icon={faEdit} className="chaptableActionIcon" />Edit</Link>
+                                                        </p>
+                                                    </div>
+
                                                     <p> {item?.description}</p>
                                                 </Accordion.Body>
                                             </Accordion.Item>
@@ -243,7 +350,71 @@ export const ChapterDetails = () => {
                         </div>
                     </div>
                 </div>
+                <CustomModal show={editModal} close={() => { setEditModal(false) }} heading="Edit Book Chapters" >
 
+
+                    <CustomInput
+                        label="Book Title"
+                        type="text"
+                        placeholder="Current Month Target"
+                        required
+                        name="title"
+                        labelClass='mainLabel'
+                        inputClass='mainInput'
+
+                        value={leadData?.title}
+                        onChange={(event) => {
+                            setLeadData(
+                                { ...leadData, 
+                                    title: event.target.value,
+                                    chapetr_id: chapetrid 
+                                
+                                });
+
+                                console.log(leadData)
+
+                        }}
+
+
+                    />
+                    <CustomInput
+                        label="Book Descripction"
+                        type="text"
+                        placeholder="book descripction"
+                        required
+                        name="description"
+                        labelClass='mainLabel'
+                        inputClass='mainInput'
+
+                        value={leadData.description}
+                        onChange={(event) => {
+                            setLeadData({ ...leadData, description: event.target.value });
+                        }}
+
+
+                    />
+                    <CustomInput
+                        label="Book Price"
+                        type="number"
+                        placeholder="book price"
+                        required
+                        name="price"
+                        labelClass='mainLabel'
+                        inputClass='mainInput'
+
+                        value={leadData.price}
+                        onChange={(event) => {
+                            setLeadData({ ...leadData, price: event.target.value });
+
+                        }}
+
+
+                    />
+
+
+
+                    <CustomButton variant='primaryButton' text='Edit' type='button' onClick={handleEdit} />
+                </CustomModal>
 
                 <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Chapter Added Successfully.' />
             </DashboardLayout>
@@ -251,3 +422,7 @@ export const ChapterDetails = () => {
     );
 };
 
+
+
+// https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/1/1
+// https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/1/undefined

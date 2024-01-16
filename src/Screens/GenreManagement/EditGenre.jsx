@@ -16,6 +16,8 @@ export const EditGenre = () => {
     });
 
 
+    const Base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
+
     const GenreData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
@@ -109,7 +111,7 @@ export const EditGenre = () => {
             })
     };
 
-
+ console.log("formData" , formData)
 
 
     return (
@@ -172,6 +174,12 @@ export const EditGenre = () => {
                                                     // value={formData.image}
                                                     onChange={filehandleChange}
                                                 />
+
+
+                                                <div className="galleryItem col-md-4 mb-3 position-relative">
+                                                    {/* <img src={formData?.ad_image} className="w-100 " /> */}
+                                                    <img className="w-100 " src={formData?.id ? Base_url + formData?.image : formData?.image} alt={`Product Image ${formData?.id}`} />
+                                                </div>
                                             </div>
                                             <div className="col-md-12 mb-4">
                                                 <div className="inputWrapper">

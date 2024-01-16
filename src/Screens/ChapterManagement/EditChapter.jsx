@@ -6,6 +6,9 @@ import CustomModal from "../../Components/CustomModal";
 import CustomInput from '../../Components/CustomInput';
 import { SelectBox } from "../../Components/CustomSelect";
 import CustomButton from "../../Components/CustomButton";
+
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 export const EditChapter = () => {
     const { id } = useParams();
     const [categories, setCategories] = useState({});

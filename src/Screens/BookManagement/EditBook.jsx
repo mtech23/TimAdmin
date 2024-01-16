@@ -16,7 +16,7 @@ export const EditBook = () => {
     const [formData, setFormData] = useState({
         image: '', // Initialize image as an empty string
     });
-
+    const Base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
     console.log(formData.image)
 
     const fetchCatories = () => {
@@ -141,6 +141,10 @@ export const EditBook = () => {
         {
             id: 2,
             name: 'Novel'
+        },
+        {
+            id: 3,
+            name: 'Novel'
         }
     ]
 
@@ -159,19 +163,33 @@ export const EditBook = () => {
         console.log(formData)
     };
 
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+    //     // console.log(file.name)
+    //     if (file) {
+    //         const fileName = file;
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             image: fileName,
+    //         }));
+    //     }
+    //     console.log(formData)
+    // };
+
+
+
     const filehandleChange = (event) => {
         const file = event.target.files[0];
-        // console.log(file.name)
+
         if (file) {
+            //   const fileName = URL.crxeateObjectURL(file); 
             const fileName = file;
             setFormData((prevData) => ({
                 ...prevData,
                 image: fileName,
             }));
         }
-        console.log(formData)
     };
-
 
 
 
@@ -212,7 +230,7 @@ export const EditBook = () => {
             })
     };
 
-
+console.log("formData" , formData)
 
 
     return (
@@ -326,6 +344,10 @@ export const EditBook = () => {
                                                     // value={formData.image}
                                                     onChange={filehandleChange}
                                                 />
+                                                <div className="galleryItem col-md-4 mb-3 position-relative">
+                                                    <img src={Base_url + formData?.image} className="w-100 " />
+
+                                                </div>
                                             </div>
                                             <div className="col-md-12 mb-4">
                                                 <div className="inputWrapper">
