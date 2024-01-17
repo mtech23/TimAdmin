@@ -12,7 +12,7 @@ export const EditCategory = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        image: '', // Initialize image as an empty string
+        image: null , // Initialize image as an empty string
     });
 
 
@@ -100,70 +100,41 @@ export const EditCategory = () => {
 
 
 
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+    //     const fileName = file;
+
+    //     if (file) {
+    //     //   const fileName = URL.createObjectURL(file); 
+    //                 //   const fileName = file;
+    //       setFormData((prevData) => ({
+    //         ...prevData,
+    //         image: fileName,
+    //       }));
+    //     }
+    //   };
+   
+
+    
+
     const filehandleChange = (event) => {
         const file = event.target.files[0];
     
         if (file) {
-          const fileName = URL.createObjectURL(file); 
-                    //   const fileName = file;
-          setFormData((prevData) => ({
-            ...prevData,
-            image: fileName,
-          }));
-        }
-      };
-   
-
-// when upload image image not showing fix it
-
-
-
-    // const filehandleChange = (event) => {
-    //     const file = event.target.files[0];
-
-    //     // if (file) {
-    //     const reader = new FileReader();
-
-    //     reader.onload = (e) => {
-    //         const imageDataUrl = e.target.result;
-
-    //         setFormData((prevData) => {
-    //             return {
-    //                 ...prevData,
-    //                 image: file,
-    //             }
-    //         });
-    //     };
-
-    //     // Read the selected image file as a data URL
-    //     reader.readAsDataURL(file);
-    //     // }
-    // };
-
-
-
+            const fileName = URL.createObjectURL(file);
     
-    // const filehandleChange = (event) => {
-    //     const files = event.target.files[0]; 
-  
-    //          const reader = new FileReader();
+            setFormData((prevData) => ({
+                ...prevData,
+                image: file, // Store the actual file in formData, not just the URL
+            }));
+        }
+    };
+    
 
-    //         reader.onload = (e) => {
-    //             const imageDataUrl = e.target.result;
+ 
 
-    //             setFormData((prevData) => {
-    //                             return {
-    //                                 ...prevData,
-    //                                 image: imageDataUrl,
-    //                             }
-    //                         });
-    //                     };
-                 
-    //         reader.readAsDataURL(files);
-        
-
-    // };
-
+console.log("formdata" , formData)
+ 
 
     const LogoutData = localStorage.getItem('login');
 
@@ -270,8 +241,8 @@ export const EditCategory = () => {
                                               
 
                                                     <div className="galleryItem col-md-4 mb-3 position-relative">
-                                                        {/* <img src={ Base_url +  formData?.image}  className="w-100 "/> */}
-                                                       <img src={formData.id ? Base_url + formData.image : formData.image} alt={`Product Image ${formData.id}`} />
+                                                       <img src={formData?.image instanceof File ? URL.createObjectURL(formData.image) : Base_url + formData?.image} className="w-100" />
+
                                                     </div>
                                              </div>
                                             <div className="col-md-12">

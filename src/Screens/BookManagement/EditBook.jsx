@@ -14,7 +14,7 @@ export const EditBook = () => {
     const [genre, setGenre] = useState({});
     const [type, setType] = useState(false);
     const [formData, setFormData] = useState({
-        image: '', // Initialize image as an empty string
+        image: null, // Initialize image as an empty string
     });
     const Base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
     console.log(formData.image)
@@ -182,7 +182,7 @@ export const EditBook = () => {
         const file = event.target.files[0];
 
         if (file) {
-            //   const fileName = URL.crxeateObjectURL(file); 
+ 
             const fileName = file;
             setFormData((prevData) => ({
                 ...prevData,
@@ -344,8 +344,9 @@ console.log("formData" , formData)
                                                     // value={formData.image}
                                                     onChange={filehandleChange}
                                                 />
-                                                <div className="galleryItem col-md-4 mb-3 position-relative">
-                                                    <img src={Base_url + formData?.image} className="w-100 " />
+                                            
+                                            <div className="galleryItem col-md-4 mb-3 position-relative">
+                                                    <img src={formData?.image instanceof File ? URL.createObjectURL(formData.image) : Base_url + formData?.image} className="w-100" />
 
                                                 </div>
                                             </div>

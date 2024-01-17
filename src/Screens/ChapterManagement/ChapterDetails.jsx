@@ -57,7 +57,7 @@ export const ChapterDetails = () => {
     }
 
 
-    // https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/1/undefined
+ 
     const [chapetrid, setChapterid] = useState()
     const chapterData = () => {
         const LogoutData = localStorage.getItem('login');

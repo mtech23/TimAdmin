@@ -12,7 +12,7 @@ export const EditGenre = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        image: '', // Initialize image as an empty string
+        image: null, // Initialize image as an empty string
     });
 
 
@@ -62,10 +62,10 @@ export const EditGenre = () => {
         const file = event.target.files[0];
         // console.log(file.name)
         if (file) {
-            const fileName = file;
+ 
             setFormData((prevData) => ({
                 ...prevData,
-                image: fileName,
+                image: file,
             }));
         }
         console.log(formData)
@@ -111,7 +111,7 @@ export const EditGenre = () => {
             })
     };
 
- console.log("formData" , formData)
+    console.log("formData", formData)
 
 
     return (
@@ -177,8 +177,8 @@ export const EditGenre = () => {
 
 
                                                 <div className="galleryItem col-md-4 mb-3 position-relative">
-                                                    {/* <img src={formData?.ad_image} className="w-100 " /> */}
-                                                    <img className="w-100 " src={formData?.id ? Base_url + formData?.image : formData?.image} alt={`Product Image ${formData?.id}`} />
+                                                    <img src={formData?.image instanceof File ? URL.createObjectURL(formData.image) : Base_url + formData?.image} className="w-100" />
+
                                                 </div>
                                             </div>
                                             <div className="col-md-12 mb-4">

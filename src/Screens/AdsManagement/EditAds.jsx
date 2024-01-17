@@ -12,7 +12,7 @@ export const EditAds = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        ad_image: '', // Initialize ad_image as an empty string
+        ad_image: null, // Initialize ad_image as an empty string
     });
 
 
@@ -71,20 +71,37 @@ export const EditAds = () => {
     // };
 
 
-    
+
+    // const filehandleChange = (event) => {
+    //     const file = event.target.files[0];
+
+    //     if (file) {
+    //         //   const fileName = URL.createObjectURL(file); 
+
+    //         const fileName = file;
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             ad_image: fileName,
+    //         }));
+    //     }
+    // };
+
+
+
+
     const filehandleChange = (event) => {
         const file = event.target.files[0];
-
+    
         if (file) {
-            //   const fileName = URL.createObjectURL(file); 
-
-            const fileName = file;
+            const fileName = URL.createObjectURL(file);
+    
             setFormData((prevData) => ({
                 ...prevData,
-                ad_image: fileName,
+                ad_image: file, // Store the actual file in formData, not just the URL
             }));
         }
     };
+    
 
 
     const LogoutData = localStorage.getItem('login');
@@ -124,9 +141,9 @@ export const EditAds = () => {
             })
     };
 
- 
 
-    console.log("formData" , formData)
+
+    console.log("formData", formData)
 
 
     return (
@@ -177,8 +194,8 @@ export const EditAds = () => {
                                                 />
 
                                                 <div className="galleryItem col-md-4 mb-3 position-relative">
-                                                    {/* <img src={formData?.ad_image} className="w-100 " /> */}
-                                                    <img  className="w-100 " src={formData?.id ? Base_url + formData?.ad_image : formData?.ad_image} alt={`Product Image ${formData?.id}`} />
+                                                    <img src={formData?.ad_image instanceof File ? URL.createObjectURL(formData.ad_image) : Base_url + formData?.ad_image} className="w-100" />
+
                                                 </div>
                                             </div>
                                             <div className="col-md-12">
