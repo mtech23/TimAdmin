@@ -97,7 +97,7 @@ export const ChapterDetails = () => {
 
     const chapdata = {
         data: {
-            chapetrid: chapetrid,
+            chapter_id: chapetrid,
             title: leadData.title,
             description: leadData.description,
             price: leadData.price
