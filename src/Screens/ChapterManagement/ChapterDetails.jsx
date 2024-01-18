@@ -57,7 +57,7 @@ export const ChapterDetails = () => {
     }
 
 
- 
+
     const [chapetrid, setChapterid] = useState()
     const chapterData = () => {
         const LogoutData = localStorage.getItem('login');
@@ -95,17 +95,59 @@ export const ChapterDetails = () => {
 
     console.log("chapetrid ", chapetrid)
 
+    const chapdata = {
+        data: {
+            chapetrid: chapetrid,
+            title: leadData.title,
+            description: leadData.description,
+            price: leadData.price
+        }
+    }
+
+
+    // const handleEdit = (e) => {
+    //     console.log("chapetrid ", chapetrid)
+    //     e.preventDefault();
+
+    //     const LogoutData = localStorage.getItem('login');
+
+
+    //     console.log(leadData);
+
+    //     fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_update_new/${id}`,
+    //         {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${LogoutData}`
+    //             },
+    //             body: JSON.stringify(chapdata)
+    //         },
+    //     )
+    //         .then((response) => {
+    //             return response.json()
+    //         })
+    //         .then((data) => {
+    //             console.log(data)
+    //             // editDetailData()
+    //             setEditModal(false)
+    //         })
+    //         .catch((error) => {
+    //             document.querySelector('.loaderBox').classList.add("d-none");
+    //             console.log(error);
+    //         })
+    // }
+
+
+
+
+
     const handleEdit = (e) => {
-        console.log("chapetrid ", chapetrid)
         e.preventDefault();
 
-        const LogoutData = localStorage.getItem('login');
-        // setLeadData((prev) => ({
-        //     ...prev,
-        //     chapetr_id: chapetrid
-        // }));
 
-        console.log(leadData);
+        const LogoutData = localStorage.getItem('login');
         fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_update_new/${id}`,
             {
                 method: 'POST',
@@ -114,7 +156,7 @@ export const ChapterDetails = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${LogoutData}`
                 },
-                body: JSON.stringify(leadData)
+                body: JSON.stringify(chapdata)
             },
         )
             .then((response) => {
@@ -122,7 +164,7 @@ export const ChapterDetails = () => {
             })
             .then((data) => {
                 console.log(data)
-                // editDetailData()
+                editDetailData(chapetrid)
                 setEditModal(false)
             })
             .catch((error) => {
@@ -130,7 +172,6 @@ export const ChapterDetails = () => {
                 console.log(error);
             })
     }
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -178,6 +219,49 @@ export const ChapterDetails = () => {
 
 
 
+    // const editDetailData = (bookid) => {
+    //     console.log("editDetailData", bookid)
+    //     setChapterid(bookid)
+    //     console.log("editDetailData", bookid)
+    //     const LogoutData = localStorage.getItem('login');
+    //     document.title = 'Mt Records | Book Chapters Detail';
+    //     document.querySelector('.loaderBox').classList.remove("d-none");
+    //     fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/${id}/${bookid}`,
+    //         {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${LogoutData}`
+    //             },
+    //         }
+    //     )
+    //         .then((response) => {
+    //             return response.json()
+    //         })
+    //         .then((data) => {
+    //             document.querySelector('.loaderBox').classList.add("d-none");
+    //             console.log(data)
+
+    //             setLeadData(data?.data)
+
+
+    //         })
+    //         .catch((error) => {
+    //             document.querySelector('.loaderBox').classList.add("d-none");
+    //             console.log(error);
+    //         })
+    // }
+
+    // useEffect(() => {
+    //     editDetailData()
+    // }, []);
+
+
+
+
+
+    
     const editDetailData = (bookid) => {
         console.log("editDetailData", bookid)
         setChapterid(bookid)
@@ -200,10 +284,11 @@ export const ChapterDetails = () => {
             })
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(data)
+
 
                 setLeadData(data?.data)
 
+                setFormData(data?.data)
 
             })
             .catch((error) => {
@@ -215,8 +300,6 @@ export const ChapterDetails = () => {
     useEffect(() => {
         editDetailData()
     }, []);
-
-
 
 
 
@@ -281,9 +364,11 @@ export const ChapterDetails = () => {
                                             <Accordion.Item eventKey={index}>
                                                 <Accordion.Header>{`Chapter ${index + 1}`}</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <div className="chapeditz d-flex">
-                                                        <h3 className="text-capitalize">{item?.title}</h3>
-                                                        <p>
+                                                    <div className="chapeditz d-flex ">
+                                                        <div>
+                                                            <h3 className="text-capitalize">{item?.title}</h3>
+                                                            <p>{item?.price}</p>
+                                                        </div> <p>
                                                             <Link onClick={() => {
                                                                 setEditModal(true)
                                                                 editDetailData(item.id)
@@ -365,13 +450,14 @@ export const ChapterDetails = () => {
                         value={leadData?.title}
                         onChange={(event) => {
                             setLeadData(
-                                { ...leadData, 
+                                {
+                                    ...leadData,
                                     title: event.target.value,
-                                    chapetr_id: chapetrid 
-                                
+                                    chapetr_id: chapetrid
+
                                 });
 
-                                console.log(leadData)
+                            console.log(leadData)
 
                         }}
 
