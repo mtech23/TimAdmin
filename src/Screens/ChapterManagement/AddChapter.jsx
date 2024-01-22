@@ -17,12 +17,12 @@ export const AddChapter = () => {
     const bookType = [
         {
             id: 1,
-            name: 'Book'
+            name: 'Wen Novel'
         },
         {
             id: 2,
-            name: 'Novel'
-        }
+            name: 'Light Novel'
+        },
     ]
 
     const fetchCatories = () => {
