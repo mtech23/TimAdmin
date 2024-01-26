@@ -25,7 +25,6 @@ export const ChapterDetails = () => {
     const base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
 
     const [data, setData] = useState({});
-    //                                   <Link to={`/book-management/edit-book/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
 
     const [showModal, setShowModal] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
@@ -97,7 +96,7 @@ export const ChapterDetails = () => {
 
     const chapdata = {
         data: {
-            chapetrid: chapetrid,
+            chapter_id: chapetrid,
             title: leadData.title,
             description: leadData.description,
             price: leadData.price
@@ -261,7 +260,7 @@ export const ChapterDetails = () => {
 
 
 
-    
+
     const editDetailData = (bookid) => {
         console.log("editDetailData", bookid)
         setChapterid(bookid)
@@ -367,7 +366,10 @@ export const ChapterDetails = () => {
                                                     <div className="chapeditz d-flex ">
                                                         <div>
                                                             <h3 className="text-capitalize">{item?.title}</h3>
-                                                            <p>{item?.price}</p>
+                                                            <div className="d-flex">
+                                                                Price:  Mana
+                                                                <p className="text-capitalize ps-1 text-success"> {item?.price}</p>
+                                                            </div>
                                                         </div> <p>
                                                             <Link onClick={() => {
                                                                 setEditModal(true)
@@ -508,7 +510,3 @@ export const ChapterDetails = () => {
     );
 };
 
-
-
-// https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/1/1
-// https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/bookchapter_view/1/undefined
