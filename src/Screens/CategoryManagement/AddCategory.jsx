@@ -17,11 +17,11 @@ export const AddCategory = () => {
     const bookType = [
         {
             id: 1,
-            name: 'Book'
+            name: 'Web Novel'
         },
         {
             id: 2,
-            name: 'Novel'
+            name: 'Light Novel'
         }
     ]
 

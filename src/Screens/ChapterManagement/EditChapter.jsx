@@ -54,12 +54,12 @@ export const EditChapter = () => {
     const bookType = [
         {
             id: 1,
-            name: 'Wen Novel'
+            name: 'Web Novel'
         },
         {
             id: 2,
             name: 'Light Novel'
-        },
+        }
     ]
 
     const handleChange = (event) => {

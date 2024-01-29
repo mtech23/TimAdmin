@@ -179,7 +179,7 @@ export const ChapterManagement = () => {
                       bookData()
                     }}
                     />
-                    <CustomButton text="  Light Novels" variant={novel ? 'primaryButton' : ''} onClick={() => {
+                    <CustomButton text="Light Novels" variant={novel ? 'primaryButton' : ''} onClick={() => {
                       setNovel(true);
                       NovelData()
                     }} />

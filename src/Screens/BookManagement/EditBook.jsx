@@ -136,7 +136,7 @@ export const EditBook = () => {
     const bookType = [
         {
             id: 1,
-            name: 'Wen Novel'
+            name: 'Web Novel'
         },
         {
             id: 2,
