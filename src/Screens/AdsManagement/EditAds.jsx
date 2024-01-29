@@ -183,7 +183,7 @@ export const EditAds = () => {
                                             <div className="col-md-6 mb-4">
                                                 <CustomInput
                                                     label='Upload Product Image'
-                                                    required
+                                                    
                                                     id='file'
                                                     type='file'
                                                     labelClass='mainLabel'
