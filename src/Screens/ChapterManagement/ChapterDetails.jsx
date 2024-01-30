@@ -164,6 +164,7 @@ export const ChapterDetails = () => {
                 console.log(data)
                 editDetailData(chapetrid)
                 setEditModal(false)
+                chapterData()
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -203,6 +204,7 @@ export const ChapterDetails = () => {
                     setShowModal(false)
                 }, 1000)
                 chapterData()
+
                 setIsChapter(false)
                 setFormData({
                     title: '',
